@@ -35,10 +35,11 @@ namespace AdventOfCode2020
             var result = new List<Dictionary<string, string>>();
 
 
-            Dictionary<string, string> passport = null; 
+            Dictionary<string, string> passport = new Dictionary<string, string>();
+            result.Add(passport);
             foreach (var line in batchData)
             {
-                if (line == "" || passport == null)
+                if (line == "")
                 {
                     passport = new Dictionary<string, string>();
                     result.Add(passport);
@@ -74,16 +75,16 @@ namespace AdventOfCode2020
         
         private bool AreRequiredFieldsValid(Dictionary<string, string> passport)
         {
-            // byr (Birth Year) - four digits; at least 1920 and at most 2002.
-            //     iyr (Issue Year) - four digits; at least 2010 and at most 2020.
-            //     eyr (Expiration Year) - four digits; at least 2020 and at most 2030.
-            //     hgt (Height) - a number followed by either cm or in:
-            // If cm, the number must be at least 150 and at most 193.
-            //     If in, the number must be at least 59 and at most 76.
-            //     hcl (Hair Color) - a # followed by exactly six characters 0-9 or a-f.
-            //     ecl (Eye Color) - exactly one of: amb blu brn gry grn hzl oth.
-            //     pid (Passport ID) - a nine-digit number, including leading zeroes.
-            //     cid (Country ID) - ignored, missing or not.
+            //byr (Birth Year) - four digits; at least 1920 and at most 2002.
+            //iyr (Issue Year) - four digits; at least 2010 and at most 2020.
+            //eyr (Expiration Year) - four digits; at least 2020 and at most 2030.
+            //hgt (Height) - a number followed by either cm or in:
+            //If cm, the number must be at least 150 and at most 193.
+            //If in, the number must be at least 59 and at most 76.
+            //hcl (Hair Color) - a # followed by exactly six characters 0-9 or a-f.
+            //ecl (Eye Color) - exactly one of: amb blu brn gry grn hzl oth.
+            //pid (Passport ID) - a nine-digit number, including leading zeroes.
+            //cid (Country ID) - ignored, missing or not.
 
             var byr = int.Parse(passport["byr"]);
             if (byr < 1920 || byr > 2002)
@@ -97,7 +98,7 @@ namespace AdventOfCode2020
             if (eyr < 2020 || eyr > 2030)
                 return false;
 
-            var hgt = new Regex("(\\d*)(cm|in)").Match(passport["hgt"]);
+            var hgt = new Regex("^(\\d*)(cm|in)$").Match(passport["hgt"]);
             if (!hgt.Success)
                 return false;
             var hgtNumber = int.Parse(hgt.Groups[1].Value);
@@ -112,13 +113,13 @@ namespace AdventOfCode2020
                     return false;
             }
 
-            if (new Regex("#([0-9a-f]{6})").Match(passport["hcl"]).Success == false)
+            if (new Regex("^#([0-9a-f]{6})$").Match(passport["hcl"]).Success == false)
                 return false;
 
-            if (new Regex("amb|blu|brn|gry|grn|hzl|oth").Match(passport["ecl"]).Success == false)
+            if (new Regex("^(amb|blu|brn|gry|grn|hzl|oth)$").Match(passport["ecl"]).Success == false)
                 return false;
 
-            if (new Regex("\\d{9}").Match(passport["pid"]).Success == false)
+            if (new Regex("^\\d{9}$").Match(passport["pid"]).Success == false)
                 return false;
 
             return true;
