@@ -7,7 +7,9 @@ namespace AdventOfCode2020
     {
         public static void Main(string[] args)
         {
-            Day day = new Day05();
+            var typeName = "AdventOfCode2020.Day" + DateTime.Now.Day.ToString("00");
+            var day = (Day) Activator.CreateInstance("AdventOfCode2020", typeName).Unwrap();
+
             Console.WriteLine($"Day {day.DayNumber} part one: {day.SolvePartOne()}");
             Console.WriteLine($"Day {day.DayNumber} part two: {day.SolvePartTwo()}");
         }
