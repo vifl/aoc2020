@@ -8,8 +8,6 @@ namespace AdventOfCode2020
 {
     public class Day04 : Day
     {
-        public override int DayNumber => 4;
-
         public override string SolvePartOne()
         {
             var lines = GetPuzzleInput();

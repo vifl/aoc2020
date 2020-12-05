@@ -2,8 +2,6 @@ namespace AdventOfCode2020
 {
     public class Day03 : Day
     {
-        public override int DayNumber => 3;
-
         public override string SolvePartOne()
         {
             var map = GetPuzzleInput();

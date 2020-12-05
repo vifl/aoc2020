@@ -6,8 +6,6 @@ namespace AdventOfCode2020
 {
     public class Day05 : Day
     {
-        public override int DayNumber => 5;
-
         public override string SolvePartOne()
         {
             // var x = GetSeatId("FBFBBFFRLR"); // 44 * 8 + 5 = 357.

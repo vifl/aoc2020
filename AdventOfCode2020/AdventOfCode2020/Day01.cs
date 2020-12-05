@@ -5,8 +5,6 @@ namespace AdventOfCode2020
 {
     public class Day01 : Day
     {
-        public override int DayNumber => 1;
-
         private int[] GetNumbers() => GetPuzzleInput().Select(line => int.Parse(line)).ToArray();
 
         public override string SolvePartOne()

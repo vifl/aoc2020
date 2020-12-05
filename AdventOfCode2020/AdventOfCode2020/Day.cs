@@ -5,14 +5,14 @@ namespace AdventOfCode2020
     public abstract class Day
     {
         public abstract string SolvePartOne();
+
         public abstract string SolvePartTwo();
 
-        public abstract int DayNumber { get; }
-        private string DayNumberFormatted => DayNumber.ToString("D2");
+        public string DayNumber => this.GetType().Name.Substring(3);
 
         protected string[] GetPuzzleInput()
         {
-            return File.ReadAllLines($"input{DayNumberFormatted}.txt");
+            return File.ReadAllLines($"input{DayNumber}.txt");
         }
     }
 }

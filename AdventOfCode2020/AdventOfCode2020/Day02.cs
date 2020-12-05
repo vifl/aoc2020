@@ -5,8 +5,6 @@ namespace AdventOfCode2020
 {
     public class Day02 : Day
     {
-        public override int DayNumber => 2;
-
         public override string SolvePartOne()
         {
             var validCount = 0;
