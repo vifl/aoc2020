@@ -32,17 +32,11 @@ namespace AdventOfCode2020
         {
             for (var i = 0; i < range.Count(); i++)
             {
-                var term1 = range[i];
-                for (var j = 0; j < range.Count(); j++)
+                for (var j = i + 1; j < range.Count(); j++) // Suggested improvement after solution submitted. Changed from j = 0 to j = i + 1. Some more related code modified.
                 {
-                    var term2 = range[j];
-
-                    if (term1 == term2)
-                        continue;
-                    if (term1 + term2 == expectedNumber)
+                    if (range[i] + range[j] == expectedNumber)
                         return true;
                 }
-                
             }
             return false;
         }
