@@ -9,8 +9,12 @@ namespace AdventOfCode2020
 {
     internal class Program
     {
+        private static int? m_forceDay = null;
+
         public static void Main(string[] args)
         {
+            //m_forceDay = 9;
+            
             var created = CreateTodaysClassIfNeeded();
             if (created)
             {
@@ -44,12 +48,12 @@ namespace AdventOfCode2020
 
         private static string GetClassName()
         {
-            return $"Day{DateTime.Now.Day:00}";
+            return $"Day{(m_forceDay ?? DateTime.Now.Day):00}";
         }
 
         private static bool CreateTodaysClassIfNeeded()
         {
-            var day = DateTime.Now.Day;
+            var day = m_forceDay ?? DateTime.Now.Day;
             var year = DateTime.Now.Year;
             var className = GetClassName();
             var projectDirectory = GetBaseDirectory();
