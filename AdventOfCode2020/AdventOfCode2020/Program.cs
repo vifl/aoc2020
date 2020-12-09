@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Reflection;
@@ -26,8 +27,19 @@ namespace AdventOfCode2020
                 return;
             }
 
-            Console.WriteLine($"Day {day.DayNumber} part one: {day.SolvePartOne()}");
-            Console.WriteLine($"Day {day.DayNumber} part two: {day.SolvePartTwo()}");
+            var stopwatch = new Stopwatch();
+            
+            Console.Write($"Solving day {day.DayNumber} part one... ");
+            stopwatch.Start();
+            var solutionPartOne = day.SolvePartOne();
+            stopwatch.Stop();
+            Console.WriteLine($"done: {solutionPartOne} (took {stopwatch.Elapsed})");
+            
+            Console.Write($"Solving day {day.DayNumber} part two... ");
+            stopwatch.Restart();
+            var solutionPartTwo = day.SolvePartTwo();
+            stopwatch.Stop();
+            Console.WriteLine($"done: {solutionPartTwo} (took {stopwatch.Elapsed})");
         }
 
         private static string GetClassName()
@@ -51,7 +63,7 @@ namespace AdventOfCode2020
                 return false;
             }
 
-        Console.WriteLine($"{classFilename} not found, will create.");
+            Console.WriteLine($"{classFilename} not found, will create.");
             var classContempt = DayTemplate.Replace("#day#", $"{day:00}");
             File.WriteAllText(classFileFullPath, classContempt);
 
