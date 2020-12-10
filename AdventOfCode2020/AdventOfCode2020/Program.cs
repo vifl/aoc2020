@@ -9,12 +9,10 @@ namespace AdventOfCode2020
 {
     internal class Program
     {
-        private static int? m_forceDay = null;
+        private static readonly int? ForceDay = null; // 9
 
         public static void Main(string[] args)
         {
-            //m_forceDay = 9;
-            
             var created = CreateTodaysClassIfNeeded();
             if (created)
             {
@@ -48,12 +46,12 @@ namespace AdventOfCode2020
 
         private static string GetClassName()
         {
-            return $"Day{(m_forceDay ?? DateTime.Now.Day):00}";
+            return $"Day{(ForceDay ?? DateTime.Now.Day):00}";
         }
 
         private static bool CreateTodaysClassIfNeeded()
         {
-            var day = m_forceDay ?? DateTime.Now.Day;
+            var day = ForceDay ?? DateTime.Now.Day;
             var year = DateTime.Now.Year;
             var className = GetClassName();
             var projectDirectory = GetBaseDirectory();
@@ -70,6 +68,8 @@ namespace AdventOfCode2020
             Console.WriteLine($"{classFilename} not found, will create.");
             var classContempt = DayTemplate.Replace("#day#", $"{day:00}");
             File.WriteAllText(classFileFullPath, classContempt);
+            AddToGit(projectDirectory, classFilename);
+            Console.WriteLine($"{classFilename} created and added to git");
 
             Console.Write($"Fetching puzzle input...");
             try
@@ -77,7 +77,8 @@ namespace AdventOfCode2020
                 var puzzleContent = GetPuzzleInput(year, day);
                 Console.WriteLine($" done.");
                 File.WriteAllText(puzzleFileFullPath, puzzleContent.Trim());
-                Console.WriteLine($"Created {puzzleFilename}");
+                AddToGit(projectDirectory, puzzleFilename);
+                Console.WriteLine($"{puzzleFilename} created and added to git");
             }
             catch (Exception e)
             {
@@ -98,6 +99,21 @@ namespace AdventOfCode2020
             Console.WriteLine($"Class and data files created. Execution halted. Please edit {classFilename} and then run again.");
 
             return true;
+        }
+
+        private static void AddToGit(string workingDirectory, string filename)
+        {
+            var startInfo = new ProcessStartInfo("git", $"add {filename}")
+            {
+                WorkingDirectory = workingDirectory,
+                UseShellExecute = false,
+                RedirectStandardOutput = true
+            };
+            var process = new Process { StartInfo = startInfo, EnableRaisingEvents = true };
+            process.OutputDataReceived += (sender, args) => Console.WriteLine(args.Data);
+            process.Start();
+            process.BeginOutputReadLine();
+            process.WaitForExit();
         }
         
         private static string GetBaseDirectory()
