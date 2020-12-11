@@ -83,8 +83,9 @@ namespace AdventOfCode2020
             catch (Exception e)
             {
                 Console.WriteLine($" failed: {e.Message}");
-                Console.WriteLine($"Created empty {puzzleFilename}");
                 File.WriteAllText(puzzleFileFullPath, "");
+                AddToGit(projectDirectory, puzzleFilename);
+                Console.WriteLine($"Created empty {puzzleFilename} and added to git");
             }
 
             var projectFile = Path.Combine(projectDirectory, "AdventOfCode2020.csproj"); 
